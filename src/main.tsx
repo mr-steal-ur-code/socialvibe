@@ -8,14 +8,21 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { AuthContextProvider } from "./providers/AuthContext.tsx";
+import { ThemeProvider } from "@mui/material";
+import Theme from "./providers/Theme.tsx";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<QueryClientProvider client={queryClient}>
-			<Router />
-			<ReactQueryDevtools />
-		</QueryClientProvider>
+		<AuthContextProvider>
+			<QueryClientProvider client={queryClient}>
+				<ThemeProvider theme={Theme}>
+					<Router />
+				</ThemeProvider>
+				<ReactQueryDevtools />
+			</QueryClientProvider>
+		</AuthContextProvider>
 	</StrictMode>
 );

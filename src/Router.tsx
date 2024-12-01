@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Notifications from "./pages/Notifications";
 import NotFound from "./pages/NotFound";
 import FindFriends from "./pages/FindFriends";
+import login from "./pages/auth/Login";
 
 const App = () => {
 	return (
@@ -12,6 +13,7 @@ const App = () => {
 			<Header />
 			<Routes>
 				<Route path="/" Component={Posts} />
+				<Route path="/login" Component={login} />
 				<Route path="/find-friends" Component={FindFriends} />
 				<Route path="/notifications" Component={Notifications} />
 				<Route path="*" Component={NotFound} />
