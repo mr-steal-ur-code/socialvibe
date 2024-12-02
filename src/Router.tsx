@@ -43,27 +43,30 @@ const App = () => {
 				<Routes>
 					<Route
 						path="/"
-						element={!isLoggedIn ? <Posts /> : <Navigate to="/login" replace />}
+						element={isLoggedIn ? <Posts /> : <Navigate to="/login" replace />}
 					/>
-					<Route path="/login" element={<Login />} />
+					<Route
+						path="/login"
+						element={isLoggedIn ? <Navigate to="/" replace /> : <Login />}
+					/>
 					<Route path="/register" element={<Register />} />
 					<Route path="/password-reset" element={<PasswordReset />} />
 					<Route
 						path="/find-friends"
 						element={
-							!isLoggedIn ? <FindFriends /> : <Navigate to="/login" replace />
+							isLoggedIn ? <FindFriends /> : <Navigate to="/login" replace />
 						}
 					/>
 					<Route
 						path="/profile"
 						element={
-							!isLoggedIn ? <Profile /> : <Navigate to="/login" replace />
+							isLoggedIn ? <Profile /> : <Navigate to="/login" replace />
 						}
 					/>
 					<Route
 						path="/notifications"
 						element={
-							!isLoggedIn ? <Notifications /> : <Navigate to="/login" replace />
+							isLoggedIn ? <Notifications /> : <Navigate to="/login" replace />
 						}
 					/>
 					<Route path="*" element={<NotFound />} />

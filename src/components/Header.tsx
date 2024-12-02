@@ -11,6 +11,7 @@ import AvatarDropdown from "./ui/AvatarDropdown";
 import NotificationDropdown from "./ui/notificationDropdown";
 import SettingsDropdown from "./ui/SettingsDropdown";
 import Avatar from "@mui/material/Avatar";
+import { Link } from "react-router";
 
 interface HeaderProps {
 	isVisible: boolean;
@@ -46,17 +47,18 @@ const Header: React.FC<HeaderProps> = ({ isVisible }) => {
 						sx={{
 							display: "flex",
 							alignItems: "center",
-							gap: 2,
 							width: isWideScreen ? "auto" : "100%",
 							justifyContent: isWideScreen ? "flex-start" : "space-between",
-							mt: isWideScreen ? 0 : 1,
+							mt: isWideScreen ? 0.5 : 1,
 						}}
 					>
-						<img
-							width={isWideScreen ? "50px" : "30px"}
-							src="/socialvibeIcon.png"
-							alt="socialvibe Icon"
-						/>
+						<Link style={{ color: "#fff" }} to="/">
+							<img
+								width={isWideScreen ? "50px" : "30px"}
+								src="/socialvibeIcon.png"
+								alt="socialvibe Icon"
+							/>
+						</Link>
 						{!isWideScreen && <SettingsDropdown />}
 					</Box>
 					<Box
@@ -69,33 +71,38 @@ const Header: React.FC<HeaderProps> = ({ isVisible }) => {
 							mt: isWideScreen ? 0 : 2,
 						}}
 					>
-						<IconButton href="/" color="inherit">
-							<HomeIcon />
-						</IconButton>
-						<IconButton href="/find-friends" color="inherit">
-							<PeopleIcon />
-						</IconButton>
+						<Link style={{ color: "#fff" }} to="/">
+							<IconButton color="inherit">
+								<HomeIcon />
+							</IconButton>
+						</Link>
+						<Link style={{ color: "#fff" }} to="/find-friends">
+							<IconButton color="inherit">
+								<PeopleIcon />
+							</IconButton>
+						</Link>
 						{isWideScreen ? (
 							<NotificationDropdown />
 						) : (
-							<IconButton href="/notifications" color="inherit">
-								<NotificationsIcon />
-							</IconButton>
+							<Link style={{ color: "#fff" }} to="/notifications">
+								<IconButton color="inherit">
+									<NotificationsIcon />
+								</IconButton>
+							</Link>
 						)}
 						{isWideScreen ? (
 							<AvatarDropdown />
 						) : (
-							<IconButton
-								href="/profile"
-								color="inherit"
-								aria-label="account of current user"
-								aria-haspopup="false"
-							>
-								<Avatar
-									src={user?.avatar ? user?.avatar : "/svg/account_circle.svg"}
-									sx={{ width: 32, height: 32 }}
-								/>
-							</IconButton>
+							<Link style={{ color: "#fff" }} to="/profile">
+								<IconButton aria-label="account of current user">
+									<Avatar
+										src={
+											user?.avatar ? user?.avatar : "/svg/account_circle.svg"
+										}
+										sx={{ width: 32, height: 32 }}
+									/>
+								</IconButton>
+							</Link>
 						)}
 					</Box>
 				</Toolbar>
