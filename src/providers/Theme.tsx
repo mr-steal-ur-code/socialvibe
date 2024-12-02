@@ -6,11 +6,20 @@ const Theme = createTheme({
 			main: "#3f51b5",
 		},
 		secondary: {
-			main: "#f50057",
+			main: "#124294",
 		},
-		// ... other palette customizations
+		text: {
+			primary: "rgba(255, 255, 255, 0.87)",
+		},
 	},
 	components: {
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					textTransform: "none",
+				},
+			},
+		},
 		MuiTextField: {
 			defaultProps: {
 				sx: {
@@ -25,7 +34,16 @@ const Theme = createTheme({
 				},
 			},
 		},
-		// ... other component customizations
+		MuiInputLabel: {
+			styleOverrides: {
+				root: {
+					color: "rgba(255, 255, 255, 0.87)",
+					"&.Mui-focused": {
+						color: "rgba(255, 255, 255, 0.87)",
+					},
+				},
+			},
+		},
 	},
 });
 

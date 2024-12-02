@@ -7,6 +7,8 @@ import {
 	Alert,
 	TextField,
 	Button,
+	Divider,
+	Link,
 } from "@mui/material";
 
 const login: React.FC = () => {
@@ -15,7 +17,7 @@ const login: React.FC = () => {
 
 	const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
 		event?.preventDefault();
-
+		setError("");
 		const data = new FormData(event?.target as HTMLFormElement);
 		const formData: { email: string; password: string } = {
 			email: "",
@@ -36,7 +38,7 @@ const login: React.FC = () => {
 	};
 
 	return (
-		<Container component="main" maxWidth="xs">
+		<Container component="main" maxWidth="lg">
 			<Box
 				sx={{
 					marginTop: 8,
@@ -46,7 +48,7 @@ const login: React.FC = () => {
 				}}
 			>
 				<Typography component="h1" variant="h5">
-					Socialvibe Log in
+					Log into Socialvibe
 				</Typography>{" "}
 				{error && <Alert severity="error">{error}</Alert>}
 				<Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
@@ -74,11 +76,54 @@ const login: React.FC = () => {
 						type="submit"
 						fullWidth
 						variant="contained"
-						sx={{ mt: 3, mb: 2 }}
+						sx={{ fontSize: "1.5rem", fontWeight: 600, mt: 3, mb: 2 }}
 					>
 						Log In
 					</Button>
 				</Box>
+				<Box
+					sx={{
+						display: "flex",
+						justifyContent: "center",
+						mt: 2,
+					}}
+				>
+					<Link href="/password-reset" variant="body1" color="warning">
+						Forgot Password?
+					</Link>
+				</Box>
+				<Box
+					sx={{
+						display: "flex",
+						alignItems: "center",
+						mt: 2,
+						mb: 2,
+					}}
+				>
+					<Divider
+						sx={{
+							border: "1px solid white",
+							width: "100px",
+						}}
+					/>
+					<Typography sx={{ mx: 1 }} variant="caption">
+						OR
+					</Typography>
+					<Divider
+						sx={{
+							border: "1px solid white",
+							width: "100px",
+						}}
+					/>
+				</Box>
+				<Button
+					sx={{ padding: "1rem", fontSize: "1.1rem" }}
+					variant="contained"
+					href="/register"
+					color="success"
+				>
+					Create new account
+				</Button>
 			</Box>
 		</Container>
 	);
