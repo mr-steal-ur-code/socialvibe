@@ -106,6 +106,7 @@ export const AuthContextProvider = ({ children }: { children: any }) => {
 	const logout = async () => {
 		try {
 			auth?.signOut();
+			console.log("Logged out");
 		} catch (error: any) {
 			console.error("Error signing out", error);
 			return error?.code || error?.message;

@@ -2,18 +2,21 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PeopleIcon from "@mui/icons-material/People";
 import HomeIcon from "@mui/icons-material/Home";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import AvatarDropdown from "./ui/AvatarDropdown";
+import NotificationDropdown from "./ui/notificationDropdown";
+import SettingsDropdown from "./ui/SettingsDropdown";
+import Avatar from "@mui/material/Avatar";
 
 interface HeaderProps {
 	isVisible: boolean;
 }
 const Header: React.FC<HeaderProps> = ({ isVisible }) => {
+	const user: { avatar: string } = { avatar: "" };
 	const theme = useTheme();
 	const isWideScreen = useMediaQuery(theme.breakpoints.up("sm"));
 	return (
@@ -54,14 +57,7 @@ const Header: React.FC<HeaderProps> = ({ isVisible }) => {
 							src="/socialvibeIcon.png"
 							alt="socialvibe Icon"
 						/>
-						<IconButton
-							size="large"
-							edge="start"
-							color="inherit"
-							aria-label="menu"
-						>
-							<MenuIcon />
-						</IconButton>
+						{!isWideScreen && <SettingsDropdown />}
 					</Box>
 					<Box
 						sx={{
@@ -79,20 +75,28 @@ const Header: React.FC<HeaderProps> = ({ isVisible }) => {
 						<IconButton href="/find-friends" color="inherit">
 							<PeopleIcon />
 						</IconButton>
-						<IconButton href="/notifications" color="inherit">
-							<NotificationsIcon />
-						</IconButton>
-						<IconButton
-							color="inherit"
-							aria-label="account of current user"
-							aria-controls="menu-appbar"
-							aria-haspopup="true"
-							onClick={() => {
-								alert("Setup popover");
-							}}
-						>
-							<AccountCircle />
-						</IconButton>
+						{isWideScreen ? (
+							<NotificationDropdown />
+						) : (
+							<IconButton href="/notifications" color="inherit">
+								<NotificationsIcon />
+							</IconButton>
+						)}
+						{isWideScreen ? (
+							<AvatarDropdown />
+						) : (
+							<IconButton
+								href="/profile"
+								color="inherit"
+								aria-label="account of current user"
+								aria-haspopup="false"
+							>
+								<Avatar
+									src={user?.avatar ? user?.avatar : "/svg/account_circle.svg"}
+									sx={{ width: 32, height: 32 }}
+								/>
+							</IconButton>
+						)}
 					</Box>
 				</Toolbar>
 			</AppBar>

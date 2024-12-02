@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import "./App.css";
 import Posts from "./pages/Posts";
 import Header from "./components/Header";
@@ -9,8 +9,11 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import PasswordReset from "./pages/auth/PasswordReset";
 import { useEffect, useState } from "react";
+import { useAuth } from "./providers/AuthContext";
+import Profile from "./pages/Profile";
 
 const App = () => {
+	const { isLoggedIn } = useAuth();
 	const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 	const [prevScrollY, setPrevScrollY] = useState(0);
 
@@ -19,10 +22,8 @@ const App = () => {
 			const currentScrollY = window.scrollY;
 
 			if (currentScrollY > prevScrollY) {
-				console.log("hide:", currentScrollY > prevScrollY);
 				setIsHeaderVisible(false);
 			} else {
-				console.log("show:", currentScrollY > prevScrollY);
 				setIsHeaderVisible(true);
 			}
 			setPrevScrollY(currentScrollY);
@@ -40,13 +41,32 @@ const App = () => {
 			<Header isVisible={isHeaderVisible} />
 			<div className="content">
 				<Routes>
-					<Route path="/" Component={Posts} />
-					<Route path="/login" Component={Login} />
-					<Route path="/register" Component={Register} />
-					<Route path="/password-reset" Component={PasswordReset} />
-					<Route path="/find-friends" Component={FindFriends} />
-					<Route path="/notifications" Component={Notifications} />
-					<Route path="*" Component={NotFound} />
+					<Route
+						path="/"
+						element={!isLoggedIn ? <Posts /> : <Navigate to="/login" replace />}
+					/>
+					<Route path="/login" element={<Login />} />
+					<Route path="/register" element={<Register />} />
+					<Route path="/password-reset" element={<PasswordReset />} />
+					<Route
+						path="/find-friends"
+						element={
+							!isLoggedIn ? <FindFriends /> : <Navigate to="/login" replace />
+						}
+					/>
+					<Route
+						path="/profile"
+						element={
+							!isLoggedIn ? <Profile /> : <Navigate to="/login" replace />
+						}
+					/>
+					<Route
+						path="/notifications"
+						element={
+							!isLoggedIn ? <Notifications /> : <Navigate to="/login" replace />
+						}
+					/>
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</div>
 		</BrowserRouter>
