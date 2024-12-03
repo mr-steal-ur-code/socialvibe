@@ -14,9 +14,11 @@ import {
 const login: React.FC = () => {
 	const { emailAndPasswordLogin } = useAuth();
 	const [error, setError] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
 		event?.preventDefault();
+		setLoading(true);
 		setError("");
 		const data = new FormData(event?.target as HTMLFormElement);
 		const formData: { email: string; password: string } = {
@@ -35,6 +37,7 @@ const login: React.FC = () => {
 		if (!res.success) {
 			setError(res.response);
 		}
+		setLoading(false);
 	};
 
 	return (
@@ -73,10 +76,16 @@ const login: React.FC = () => {
 						autoComplete="current-password"
 					/>
 					<Button
+						disabled={loading}
 						type="submit"
 						fullWidth
 						variant="contained"
-						sx={{ fontSize: "1.5rem", fontWeight: 600, mt: 3, mb: 2 }}
+						sx={{
+							fontSize: "1.5rem",
+							fontWeight: 600,
+							mt: 3,
+							mb: 2,
+						}}
 					>
 						Log In
 					</Button>

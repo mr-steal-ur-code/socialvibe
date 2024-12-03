@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import "./App.css";
-import Posts from "./pages/Posts";
 import Header from "./components/Header";
 import Notifications from "./pages/Notifications";
 import NotFound from "./pages/NotFound";
@@ -11,9 +10,11 @@ import PasswordReset from "./pages/auth/PasswordReset";
 import { useEffect, useState } from "react";
 import { useAuth } from "./providers/AuthContext";
 import Profile from "./pages/Profile";
+import Home from "./pages/Home";
 
 const App = () => {
 	const { isLoggedIn } = useAuth();
+	const hasAuth = isLoggedIn || isLoggedIn == undefined;
 	const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 	const [prevScrollY, setPrevScrollY] = useState(0);
 
@@ -43,30 +44,28 @@ const App = () => {
 				<Routes>
 					<Route
 						path="/"
-						element={isLoggedIn ? <Posts /> : <Navigate to="/login" replace />}
+						element={hasAuth ? <Home /> : <Navigate to="/login" replace />}
 					/>
 					<Route
 						path="/login"
-						element={isLoggedIn ? <Navigate to="/" replace /> : <Login />}
+						element={hasAuth ? <Navigate to="/" replace /> : <Login />}
 					/>
 					<Route path="/register" element={<Register />} />
 					<Route path="/password-reset" element={<PasswordReset />} />
 					<Route
 						path="/find-friends"
 						element={
-							isLoggedIn ? <FindFriends /> : <Navigate to="/login" replace />
+							hasAuth ? <FindFriends /> : <Navigate to="/login" replace />
 						}
 					/>
 					<Route
 						path="/profile"
-						element={
-							isLoggedIn ? <Profile /> : <Navigate to="/login" replace />
-						}
+						element={hasAuth ? <Profile /> : <Navigate to="/login" replace />}
 					/>
 					<Route
 						path="/notifications"
 						element={
-							isLoggedIn ? <Notifications /> : <Navigate to="/login" replace />
+							hasAuth ? <Notifications /> : <Navigate to="/login" replace />
 						}
 					/>
 					<Route path="*" element={<NotFound />} />

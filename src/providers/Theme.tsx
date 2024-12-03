@@ -2,11 +2,15 @@ import { createTheme } from "@mui/material/styles";
 
 const Theme = createTheme({
 	palette: {
+		action: {
+			disabledBackground: "#494949",
+			disabled: "#949494",
+		},
 		primary: {
 			main: "#3f51b5",
 		},
 		secondary: {
-			main: "#124294",
+			main: "#b7b3b4",
 		},
 		text: {
 			primary: "rgba(255, 255, 255, 0.87)",
