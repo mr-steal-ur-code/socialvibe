@@ -1,33 +1,32 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AddPost from "../components/AddPost";
 
-const posts = [
-	{
-		id: 1,
-		title: "Post 1",
-	},
-	{
-		id: 2,
-		title: "Post 2",
-	},
-];
-
 const Home: React.FC = () => {
 	const queryClient = useQueryClient();
+
 	const postsQuery = useQuery({
 		queryKey: ["posts"],
-		queryFn: () => wait(1000).then(() => [...posts]),
+		queryFn: async () => {
+			// Replace with API call
+			return [];
+		},
 	});
 
-	const newPost = useMutation({
-		mutationFn: (title: string) => {
-			return wait(1000).then(() => posts.push({ id: posts.length + 1, title }));
+	const addPostMutation = useMutation({
+		mutationFn: async (newPost: { id: string; body: string }) => {
+			// Replace with API request
+			return fetch("/api/posts", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(newPost),
+			}).then((res) => res.json());
 		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["posts"],
-			});
+		onSuccess: (newPost) => {
+			queryClient.setQueryData(["posts"], (oldPosts: any) => [
+				...(oldPosts || []),
+				newPost,
+			]);
 		},
 	});
 
@@ -38,24 +37,20 @@ const Home: React.FC = () => {
 
 	return (
 		<>
-			<Box sx={{ mb: 10 }}>
-				{postsQuery.data?.map((post: { id: number; title: string }) => (
-					<div key={post?.id}>{post?.title}</div>
-				))}
-				<button
-					disabled={newPost.isPending}
-					onClick={() => newPost.mutate("Post 3")}
-				>
-					Add New
-				</button>
+			<AddPost onAddPost={addPostMutation.mutate} />
+			<Box sx={{ margin: "1rem 0", border: "2px solid gray" }}>
+				{postsQuery.data?.length ? (
+					postsQuery?.data?.map((post: { id: string; body: string }) => (
+						<div key={post?.id}>{post?.body}</div>
+					))
+				) : (
+					<Typography component={"h3"} textAlign={"center"} padding={"2rem"}>
+						No posts yet. Start by adding one or connecting with others!
+					</Typography>
+				)}
 			</Box>
-			<AddPost />
 		</>
 	);
 };
-
-function wait(duration: number) {
-	return new Promise((resolve) => setTimeout(resolve, duration));
-}
 
 export default Home;

@@ -10,7 +10,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { AuthContextProvider } from "./providers/AuthContext.tsx";
 import { ThemeProvider } from "@mui/material";
-import Theme from "./providers/Theme.tsx";
+import Theme from "./Theme.ts";
 
 const queryClient = new QueryClient();
 
