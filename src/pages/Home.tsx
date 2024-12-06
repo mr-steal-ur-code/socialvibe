@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AddPost from "../components/AddPost";
+import QuickAddCarousel from "../components/QuickAddCarousel";
 
 const Home: React.FC = () => {
 	const queryClient = useQueryClient();
@@ -37,8 +38,9 @@ const Home: React.FC = () => {
 
 	return (
 		<>
+			<QuickAddCarousel />
 			<AddPost onAddPost={addPostMutation.mutate} />
-			<Box sx={{ margin: "1rem 0", border: "2px solid gray" }}>
+			<Box sx={{ margin: "1 0", border: "2px solid gray" }}>
 				{postsQuery.data?.length ? (
 					postsQuery?.data?.map((post: { id: string; body: string }) => (
 						<div key={post?.id}>{post?.body}</div>
