@@ -18,13 +18,12 @@ body {
 
 .content {
   margin: 0 auto;
-  max-width: 90% !important;
-  padding: 2rem 1rem;
+  max-width: 90%;
 }
 
 @media screen and (max-width:500px) {
   .content {
-    max-width: 100vw !important;
+    max-width: 100vw;
     padding: 1rem .5rem;
   }
 }

@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 
 interface AddPostProps {
-	onAddPost: (newPost: { id: string; body: string }) => void;
+	onAddPost: (arg0: Post) => void;
 }
 
 const AddPost: React.FC<AddPostProps> = ({ onAddPost }) => {

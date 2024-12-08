@@ -2,7 +2,10 @@ import React, { useMemo } from "react";
 import Slider from "react-slick";
 import { Button, Box, useMediaQuery, useTheme } from "@mui/material";
 
-const QuickAddCarousel: React.FC = () => {
+interface QuickAddProps {
+	onAddFriend: () => void;
+}
+const QuickAddCarousel: React.FC<QuickAddProps> = ({ onAddFriend }) => {
 	const theme = useTheme();
 	const isMdScreen = useMediaQuery(theme.breakpoints.up("sm"));
 	const isLgScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -25,12 +28,16 @@ const QuickAddCarousel: React.FC = () => {
 		slidesToScroll,
 	};
 
+	const handleAddFriend = () => {
+		if (onAddFriend) onAddFriend();
+	};
+
 	const profiles = [
 		{ id: 1, image: "https://picsum.photos/200", name: "John Doe" },
-		{ id: 2, image: "https://picsum.photos/200", name: "Jane Smith" },
-		{ id: 3, image: "https://picsum.photos/200", name: "Emily Brown" },
-		{ id: 1, image: "https://picsum.photos/200", name: "John Doe" },
-		{ id: 2, image: "https://picsum.photos/200", name: "Jane Smith" },
+		{ id: 2, image: "https://picsum.photos/200", name: "Jane Doe" },
+		{ id: 3, image: "https://picsum.photos/200", name: "Alexis Karkut" },
+		{ id: 1, image: "https://picsum.photos/200", name: "Lil Man" },
+		{ id: 2, image: "https://picsum.photos/200", name: "Woman" },
 		{ id: 3, image: "https://picsum.photos/200", name: "Emily Brown" },
 	];
 
@@ -55,7 +62,9 @@ const QuickAddCarousel: React.FC = () => {
 							}}
 						/>
 						<p>{profile.name}</p>
-						<Button variant="contained">Add</Button>
+						<Button onClick={handleAddFriend} variant="contained">
+							Add
+						</Button>
 					</Box>
 				))}
 			</Slider>
