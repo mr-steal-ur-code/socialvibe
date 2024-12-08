@@ -1,7 +1,8 @@
 type User = {
-  uid: string;
+  id: string;
   firstName: string;
   lastName: string;
+  email: string;
 }
 
 type UserRole =
