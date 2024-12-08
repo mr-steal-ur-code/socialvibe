@@ -23,6 +23,7 @@ type Claims = {
 type Post =
   {
     id: string;
+    userId: string;
     body: string;
     reactions?: Reaction[];
     comments?: PostComment[];

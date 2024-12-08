@@ -84,15 +84,16 @@ const Home: React.FC = () => {
 				justifyContent: "space-between",
 				alignItems: "center",
 				gap: "2rem",
-				padding: "2rem",
 			}}
 		>
 			<QuickAddCarousel onAddFriend={() => alert("Add Friend")} />
 			<AddPost onAddPost={addPostMutation.mutate} />
 			<PostComponent
+				key={1}
 				onReaction={() => alert("Reaction")}
 				onComment={() => alert("Comment")}
 				post={{
+					userId: "0987",
 					createdAt: new Date().toISOString(),
 					id: "1",
 					body: "This is a placeholder body",
@@ -137,9 +138,11 @@ const Home: React.FC = () => {
 				}}
 			/>
 			<PostComponent
+				key={2}
 				onReaction={() => alert("Reaction")}
 				onComment={() => alert("Comment")}
 				post={{
+					userId: "9753",
 					id: "1",
 					body: "This is a placeholder body",
 					reactions: [],

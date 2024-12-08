@@ -5,6 +5,7 @@ import {
 	TextField,
 	Typography,
 	IconButton,
+	Avatar,
 } from "@mui/material";
 import { useState } from "react";
 import CommentComponent from "./CommentComponent.";
@@ -31,17 +32,15 @@ const PostComponent: React.FC<PostProps> = ({
 }) => {
 	const [showReactionInput, setShowReactionInput] = useState(false);
 	const [showCommentInput, setShowCommentInput] = useState(false);
-	const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
 	const [commentBody, setCommentBody] = useState<string>("");
 
-	const handleReactionSubmit = () => {
-		if (!selectedReaction) return;
+	const handleReactionSubmit = (react: string) => {
+		if (!react) return;
 
 		const reactions = post.reactions || [];
 
 		const existingReactionIndex = reactions.findIndex(
-			(reaction) =>
-				reaction.reacts[selectedReaction as keyof typeof reaction.reacts]
+			(reaction) => reaction.reacts[react as keyof typeof reaction.reacts]
 		);
 
 		let updatedReactions;
@@ -52,9 +51,9 @@ const PostComponent: React.FC<PostProps> = ({
 				...updatedReactions[existingReactionIndex],
 				reacts: {
 					...updatedReactions[existingReactionIndex].reacts,
-					[selectedReaction]:
+					[react]:
 						(updatedReactions[existingReactionIndex].reacts[
-							selectedReaction as ReactionKeys
+							react as ReactionKeys
 						] || 0) + 1,
 				},
 				id: "123456",
@@ -67,7 +66,7 @@ const PostComponent: React.FC<PostProps> = ({
 				...(post.reactions || []),
 				{
 					reacts: {
-						[selectedReaction]: 1,
+						[react]: 1,
 					},
 					id: "123456789",
 					userId: "userIdPlaceholder",
@@ -83,7 +82,6 @@ const PostComponent: React.FC<PostProps> = ({
 		});
 
 		setShowReactionInput(false);
-		setSelectedReaction(null);
 	};
 
 	const handleCommentSubmit = () => {
@@ -121,6 +119,7 @@ const PostComponent: React.FC<PostProps> = ({
 				boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
 			}}
 		>
+			<Avatar />
 			<Typography variant="body1" color="text.primary">
 				{post.body}
 			</Typography>
@@ -129,7 +128,7 @@ const PostComponent: React.FC<PostProps> = ({
 				<Box sx={{ marginTop: 2 }}>
 					<Stack spacing={1}>
 						{post.comments.map((comment) => (
-							<CommentComponent comment={comment} />
+							<CommentComponent key={comment?.id} comment={comment} />
 						))}
 					</Stack>
 				</Box>
@@ -159,19 +158,15 @@ const PostComponent: React.FC<PostProps> = ({
 						<IconButton
 							key={reaction}
 							onClick={() => {
-								setSelectedReaction(reaction);
-								handleReactionSubmit();
+								handleReactionSubmit(reaction);
 							}}
 							sx={{
 								fontSize: 24,
 								padding: 0.5,
-								color:
-									selectedReaction === reaction
-										? "primary.main"
-										: "text.secondary",
+								color: "text.secondary",
 								"&:hover": {
 									color: "primary.main",
-									backgroundColor: "rgba(0, 0, 0, 0.04)",
+									backgroundColor: "rgba(0, 0, 0, .1)",
 								},
 							}}
 						>

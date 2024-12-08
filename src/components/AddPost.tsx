@@ -11,7 +11,12 @@ const AddPost: React.FC<AddPostProps> = ({ onAddPost }) => {
 
 	const handleSubmit = () => {
 		if (body.trim()) {
-			const newPost = { id: Date.now().toString(), body };
+			const newPost = {
+				userId: "246",
+				id: Date.now().toString(),
+				body,
+				createdAt: Date.now().toString(),
+			};
 			onAddPost(newPost);
 			setBody("");
 		}
