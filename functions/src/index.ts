@@ -1,13 +1,16 @@
 import { onRequest } from "firebase-functions/v2/https";
+import * as admin from "firebase-admin";
 import * as express from "express";
 import * as cors from "cors";
 import usersRouter from "./routes/user";
 import postsRouter from "./routes/posts";
 
+admin.initializeApp();
+
 const app = express();
 
 const corsOptions = {
-  origin: true,
+  origin: ['https://socialvibe-4abd3.web.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 
