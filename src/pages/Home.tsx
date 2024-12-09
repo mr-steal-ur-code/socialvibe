@@ -3,9 +3,18 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AddPost from "../components/AddPost";
 import QuickAddCarousel from "../components/QuickAddCarousel";
 import PostComponent from "../components/PostComponent";
+import { useEffect } from "react";
 
 const Home: React.FC = () => {
 	const queryClient = useQueryClient();
+
+	useEffect(() => {
+		const apiCall = async () => {
+			const apicall = await fetch("https://api-6ug644yr2a-uc.a.run.app");
+			console.log("api call:", apicall);
+		};
+		apiCall();
+	}, []);
 
 	const postsQuery = useQuery({
 		queryKey: ["posts"],

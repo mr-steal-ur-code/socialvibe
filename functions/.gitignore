@@ -2,7 +2,6 @@
 lib/**/*.js
 lib/**/*.js.map
 lib
-src
 
 # TypeScript v1 declaration files
 typings/
